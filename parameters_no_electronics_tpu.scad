@@ -2,7 +2,9 @@
 $fn = 40;
 
 
-
+sextic_piece_filename = "prepped_for_lamp.stl";
+connection_piece_filename = sextic_piece_filename;
+make_hollow = true;
 
 pi = acos(-1);
 angle_dihedral = acos(-sqrt(5)/3)*180/pi;

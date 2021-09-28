@@ -1,12 +1,13 @@
 
 $fn = 40;
 
-
-
+sextic_piece_filename = "prepped_for_lamp.stl";
+connection_piece_filename = sextic_piece_filename;
 
 pi = acos(-1);
 angle_dihedral = acos(-sqrt(5)/3)*180/pi;
 
+make_hollow = true;
 
 z_scale = 125; // the overall height of the object, top to bottom.
 wall_thickness = 1;// only ever approximate, no promises, k?
@@ -30,7 +31,7 @@ connection_play = 0.2; // a gap between the plug and the socket
 plug_tab_depth = 4; // also how long the tab wedge is.  this distance produces overage on how long the plug cylinder is, how long it extends beyond the socket.  
 plug_tab_cutout_depth = 10.5; // includes the plug_tab_depth
 plug_tab_cutout_thickness = 1.2; // the amount of material missing. the gap between the tab and the cylinder remnants
-plug_tab_thickness = 1.0;
+plug_tab_thickness = 1.4;
 
 plug_wedge_h =2.2; // how much the tab protrudes above the cylinder is the difrerence between this number and plug_tab_thickness.  this number must exceed plug_tab_thickness for the tab to be visible.
 plug_wedge_w = 2; // how wide the tab is.
@@ -45,19 +46,21 @@ plug_length_overage = 1.5; // a manual adjustment for making the plug long enoug
 
 
 mount_t = 6;
-mount_platform_dia = 22.5; //  spec says 22.95 for a neopixel jewel 7-led board
+mount_platform_dia = 24; //  spec says 22.95 for a neopixel jewel 7-led board.  i went high for extra clearance
 mount_base_dia = 27;
 mount_platform_thickness = 1.6;
 mount_platform_dia_inner = 15;
 
 mount_screwhole_dia = 1.9;
+mount_screwhole_offset = 9.5;
+mount_squaring_d = 3;
 
 mount_wire_cutout_vertical_ratio = 2/3;
 wire_radial_cutout = 1.;
 wire_cutout_width = 14;
 
 cover_horizontal_offset = 0.8;
-cover_vertical_offset = 0.4; // the additional gap between the cover and its mating surface on the body.
+cover_vertical_offset = 0.3; // the additional gap between the cover and its mating surface on the body.
 cover_aspect_ratio = 1;
 coin_slot_depth = 0; // mm depth of how far the coin slot cuts into the cover
 
@@ -65,9 +68,9 @@ snap_length = 3.5;
 snap_width = 6;
 snap_thickness = 1.6;
 
-snap_thickness_overage = 2; // an additional distance to cut out vertically for the snapping tabs which lock the cap to the body. 
-snap_width_overage = 1;
-snap_length_overage = 1;
+snap_thickness_overage = 0.4; // an additional distance to cut out vertically for the snapping tabs which lock the cap to the body. 
+snap_width_overage = 0.4;
+snap_length_overage = 0.3;
 
 snap_housing_wall_thickness = 3;
 snap_housing_ceiling_thickness = 2;
@@ -75,7 +78,7 @@ snap_height_offset = 1.8; // adjust the vertical placement of the tab
 
 hang_hook_dia = 40;
 hang_hook_thickness = 12;
-hang_hook_wall_thickness = 2;
+hang_hook_wall_thickness = 1;
 hang_hook_height = .83*z_scale;
 
 hang_hook_piece_num_plugs = 2;

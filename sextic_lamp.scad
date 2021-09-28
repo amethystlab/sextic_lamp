@@ -2,15 +2,18 @@
 //
 // scaling causes the quarter cutout not to be placed correctly.  but it's close-ish
 
-//include <parameters_no_electronics_tpu.scad>;
-include <parameters_electronics_pla.scad>;
-
+//include <parameters_no_electronics_tpu_small.scad>;
+include <parameters_no_electronics_tpu.scad>;
+//include <parameters_electronics_pla.scad>;
+//include <parameters_no_snaps_small.scad>;
+//include <parameters_wireframe.scad>;
+//
 eps = 0.01; // a very small number.  improves differences with coplanar faces
 
 
 // viewing and testing parameters
 
-cut_with = ""; // other options are cube, sphere
+cut_with = ""; // options are "cube", "sphere". anything else will result in no cutting
 
 cutting_sphere_center = z_scale*[.30,.55,.42];
 cutting_sphere_r = z_scale*.50;
@@ -20,28 +23,66 @@ cutting_sphere_r = z_scale*.50;
 
 //non-user-set parameters
 
+pi = acos(-1);
+angle_dihedral = acos(-sqrt(5)/3)*180/pi;
+
 inner_blob_scale = (z_scale-2*wall_thickness)/z_scale; // the scale of the inner blob, duh
 inner_blob_scale_hook = (z_scale-2*wall_thickness_hook_part)/z_scale;
 
 plug_and_socket_translation = connection_overlap-connection_length;
 
+// these could probably be improved.  the two-digit numbers i provided are almost certainly wrong; they were eyeballed.  
 dist_to_points = 0.41*z_scale; // the distance from the origin to the points of the triangle, in the projection
 dist_to_floor = 0.04*z_scale; // distance to the interior floor of the object
 dist_to_bottom = 0.11*z_scale; // distance to the interior floor of the object
 
 ////////////////////////////////////////////////////
 
+//difference(){
+//  union(){
+//	translate([50,0,0])
+//rotate(90,[1,0,0])
+//cover();
+//hook_piece_placed();
+//
+
+//
+//intersection()
+//{
+//hook_piece(hang_hook_piece_num_plugs);
+//hook_piece_placed();
+//
+//piece(1);
+//cylinder(r=20,h=20,center=true);
+//}
+//}
+//translate([-50,0,-50])
+//cube([100,100,100]);
+//}
+
+//difference(){
+//  union(){
+//	translate([50,0,0])
 //rotate(90,[1,0,0])
 //cover();
 //hook_piece_placed();
 
-//pieces_placed();
+//pieces_placed([2]);
 
-piece(2);
+//intersection()
+//{
+//piece(3);
+//cylinder(r=20,h=20,center=true);
+//}
+//}
+//translate([-50,0,-50])
+//cube([100,100,100]);
+//}
+
 
 //piece_cut(0);
-//pieces_assembled();
-
+pieces_assembled();
+//
 
 //piece_A_cut();
 
@@ -64,32 +105,15 @@ module hook_piece_placed()
 }
 
 
-module pieces_placed()
+module pieces_placed(nums)
 {
-
 t = .8;
-  
-  piece_cut(0);
-
-
-  translate([-t*z_scale,0,0])
-{
-  piece_cut(1);
+for (ii=[0:len(nums)-1]){
+    translate([ii*t*z_scale,0,0]){
+      piece_cut(nums[ii]);
+    }
+    }
 }
-
-  translate([0,-t*z_scale,0])
-{
-  piece_cut(2);
-}
-
-
-  translate([-t*z_scale,-t*z_scale,0])
-{
-  piece_cut(3);
-}
-
-}
-
 
 
 
@@ -147,13 +171,13 @@ module pieces_assembled()
   {cover();}
 
 
-  translate([.58*z_scale,0,-.23*z_scale])
+  translate([.61*z_scale,0,-.235*z_scale])
   {
 
 	rotate((180-angle_dihedral),[0,1,0])
   rotate(180,[0,0,1])
 	
-	rotate(-120,[0,0,1])
+	rotate(-240,[0,0,1])
 	{
   piece(2);
 	  if (electonics_parts_toggle)
@@ -229,7 +253,12 @@ module main_blob_pos(num_plugs, inner_scale)
   {
 	union()
 	{
-	sextic_blob_hollow(s=inner_scale);
+        if (make_hollow){
+            sextic_blob_hollow(s=inner_scale,filename=sextic_piece_filename);
+        }
+        else{
+            sextic_blob_solid(sextic_piece_filename);
+        }
 	if (electonics_parts_toggle)
 	 {
 	   cover_interior_parts();
@@ -290,7 +319,7 @@ module cover_interior_parts()
 	{
 	  translate([0,0,-.20*z_scale])
 	  cylinder(r=mount_platform_dia/2+snap_length+snap_length_overage+snap_housing_wall_thickness,h=.18*z_scale+snap_thickness_overage+snap_housing_ceiling_thickness);
-	  sextic_blob_solid();
+	  sextic_blob_solid(sextic_piece_filename);
 		
 	} // isect
 	
@@ -312,32 +341,32 @@ module cover_interior_parts()
 
 
 
-module sextic_blob_hollow(s)
+module sextic_blob_hollow(s, filename)
 {
+ 
   difference()
   {
-	sextic_blob_solid();
-	
-	inner_blob(s);
+	sextic_blob_solid(filename);
+	inner_blob(s, filename);
   }
 }
 
 
-module inner_blob(s)
+module inner_blob(s, filename)
 {	
 	translate([0,0,interior_z_offset])
 	  scale([s,s,s])
-		sextic_blob_solid();
+		sextic_blob_solid(filename);
 }
 
 
-module sextic_blob_solid()
+module sextic_blob_solid(filename)
 {
   resize([0,0,z_scale], auto=true)
 //  import("lamp_one_piece.stl");
   
   rotate(90,[0,0,1])
-  import("prepped_for_lamp.stl");
+  import(filename);
   
 }
 
@@ -363,11 +392,11 @@ module socket_neg()
 
 module socket_pos(angle)
 {
-  s =0.98;
+  s =0.995;
  intersection(){
 
 scale([s,s,s])
-sextic_blob_solid();
+sextic_blob_solid(connection_piece_filename);
 	
 rotate(angle,[0,0,1])
   translate([dist_to_points,0,0])
@@ -531,7 +560,7 @@ module cover()
 	  
 	// the positive part
 	intersection(){
-	  sextic_blob_solid();
+	  sextic_blob_solid(connection_piece_filename);
 	  cover_cone(inset = cover_horizontal_offset);
 	}
   
@@ -596,10 +625,14 @@ module mount()
   translate([0,0,-eps])
 	cylinder(r=mount_platform_dia_inner/2,h=mount_t+2*eps);
 	
+
   for (ii=[-1,1])
   {
-	translate([ii*9.1,0,-eps])
+	translate([ii*mount_screwhole_offset,0,-eps])
 	  cylinder(r=mount_screwhole_dia/2,h=mount_t+2*eps);
+	
+	translate([0,ii*(mount_platform_dia/2+mount_platform_dia/2 - mount_squaring_d),mount_t/2])
+	cube([mount_platform_dia,mount_platform_dia,mount_t+2*eps],center=true);
   }
   
   
@@ -683,7 +716,7 @@ module hook_pos()
 } //scale 
 
 
-inner_blob(s=inner_blob_scale_hook);
+inner_blob(s=inner_blob_scale_hook, filename=connection_piece_filename);
 }// outer diff
 
 }
