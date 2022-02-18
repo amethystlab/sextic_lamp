@@ -1,6 +1,13 @@
-// known issues
+// This work is licensed under the 
+// Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License. 
+// To view a copy of this license, 
+// visit http://creativecommons.org/licenses/by-nc-sa/4.0/ 
+// or send a letter to Creative Commons, PO Box 1866, Mountain View, CA 94042, USA.
+
+
+// This code has the following known issues: (not exhaustive at all, ha.  good luck.)
 //
-// scaling causes the quarter cutout not to be placed correctly.  but it's close-ish
+// • scaling causes the quarter cutout not to be placed correctly.  but it's close-ish
 
 include <parameters_no_electronics_tpu_small.scad>;
 //include <parameters_electronics_tpu.scad>;
