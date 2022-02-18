@@ -15,4 +15,4 @@ Both PLA and TPU are suitable for these models, and I've developed parameter set
 
 ## License
 
-This code is offered CC BY-NC-SA 2.0
+This code is offered Attribution-NonCommercial-ShareAlike 4.0 International (CC BY-NC-SA 4.0)
