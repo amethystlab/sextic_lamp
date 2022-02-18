@@ -6,13 +6,13 @@ sextic_piece_filename = "prepped_for_lamp.stl";
 connection_piece_filename = sextic_piece_filename;
 make_hollow = true;
 
-pi = acos(-1);
-angle_dihedral = acos(-sqrt(5)/3)*180/pi;
+electonics_parts_toggle = true;
 
+include <mount_button.scad>;
 
 z_scale = 60; // the overall height of the object, top to bottom.
-wall_thickness = 1;// only ever approximate, no promises, k?
-wall_thickness_hook_part = 4;// only ever approximate, no promises, k?
+wall_thickness = 2;// only ever approximate, no promises, k?
+wall_thickness_hook_part = 2;// only ever approximate, no promises, k?
 
 
 interior_z_offset = 1; // adjust the interior smaller blob.  can help with bottom thickness problems.
@@ -23,9 +23,9 @@ connection_length = 5;
 
 connection_overlap = 2; // how much the connection extends into the body.  this is because the points are there...
 
-wire_hole_dia = 5;
+wire_hole_dia = 3.5;
 
-connection_play = 0.225; // a gap between the plug and the socket
+connection_play = 0.05; // a gap between the plug and the socket
 
 
 
@@ -46,42 +46,47 @@ plug_length_overage = 2.5; // a manual adjustment for making the plug long enoug
 
 
 
-mount_t = 6;
-mount_platform_dia = 22.5; //  spec says 22.95 for a neopixel jewel 7-led board
-mount_base_dia = 27;
+mount_t = 1.5;
+mount_platform_dia = 12; //  spec says 22.95 for a neopixel jewel 7-led board
+mount_base_dia = 12; // the size of the piece cut from the body
 mount_platform_thickness = 1.6;
-mount_platform_dia_inner = 15;
+mount_platform_dia_inner = 4;
 
-mount_screwhole_dia = 1.9;
+cover_snap_rotation = 0;
+some_unknown_rotation = 0;
 
-mount_wire_cutout_vertical_ratio = 2/3;
+mount_screwhole_dia = 1; 
+mount_screwhole_offset = 10.5;
+mount_squaring_d = 4;
+
+mount_wire_cutout_vertical_ratio = 1.5;
 wire_radial_cutout = 1.;
-wire_cutout_width = 14;
+wire_cutout_width = 6;
 
-cover_horizontal_offset = 0.8;
-cover_vertical_offset = 0.4; // the additional gap between the cover and its mating surface on the body.
+cover_horizontal_offset = 1;
+cover_vertical_offset = 0.6; // the additional gap between the cover and its mating surface on the body.
 cover_aspect_ratio = 1;
-coin_slot_depth = 3; // mm depth of how far the coin slot cuts into the cover
+coin_slot_depth = -5; // mm depth of how far the coin slot cuts into the cover
 
-snap_length = 3.5;
-snap_width = 6;
-snap_thickness = 1.6;
+snap_length = 8;
+snap_width = 3;
+snap_thickness = 1;
 
-snap_thickness_overage = 2; // and additional distance to cut out vertically for the snapping tabs which lock the cap to the body. 
-snap_width_overage = 1;
-snap_length_overage = 1;
+snap_thickness_overage = 1.5; // and additional distance to cut out vertically for the snapping tabs which lock the cap to the body. 
+snap_width_overage = .5;
+snap_length_overage = .5;
 
-snap_housing_wall_thickness = 3;
-snap_housing_ceiling_thickness = 2;
-snap_height_offset = 1.8; // adjust the vertical placement of the tab
+snap_housing_wall_thickness = 2;
+snap_housing_ceiling_thickness = -1;
+snap_height_offset = 0; // adjust the vertical placement of the tab
 
-hang_hook_dia = 40;
-hang_hook_thickness = 12;
-hang_hook_wall_thickness = 2;
+hang_hook_dia = 20;
+hang_hook_thickness = 7;
+hang_hook_wall_thickness = 1.75;
 hang_hook_height = .83*z_scale;
 
 hang_hook_piece_num_plugs = 2;
 
 
-electonics_parts_toggle = false;
+
 

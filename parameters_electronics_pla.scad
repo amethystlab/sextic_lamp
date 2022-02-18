@@ -4,8 +4,9 @@ $fn = 40;
 sextic_piece_filename = "prepped_for_lamp.stl";
 connection_piece_filename = sextic_piece_filename;
 
-pi = acos(-1);
-angle_dihedral = acos(-sqrt(5)/3)*180/pi;
+include <mount_jewel.scad>;
+
+electonics_parts_toggle = true;
 
 make_hollow = true;
 
@@ -84,5 +85,5 @@ hang_hook_height = .83*z_scale;
 hang_hook_piece_num_plugs = 2;
 
 
-electonics_parts_toggle = true;
+
 

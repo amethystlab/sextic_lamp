@@ -2,8 +2,8 @@
 //
 // scaling causes the quarter cutout not to be placed correctly.  but it's close-ish
 
-//include <parameters_no_electronics_tpu_small.scad>;
-include <parameters_no_electronics_tpu.scad>;
+include <parameters_no_electronics_tpu_small.scad>;
+//include <parameters_electronics_tpu.scad>;
 //include <parameters_electronics_pla.scad>;
 //include <parameters_no_snaps_small.scad>;
 //include <parameters_wireframe.scad>;
@@ -13,7 +13,7 @@ eps = 0.01; // a very small number.  improves differences with coplanar faces
 
 // viewing and testing parameters
 
-cut_with = ""; // options are "cube", "sphere". anything else will result in no cutting
+cut_with = "nothing"; // options are "cube", "sphere". anything else will result in no cutting
 
 cutting_sphere_center = z_scale*[.30,.55,.42];
 cutting_sphere_r = z_scale*.50;
@@ -66,8 +66,8 @@ dist_to_bottom = 0.11*z_scale; // distance to the interior floor of the object
 //rotate(90,[1,0,0])
 //cover();
 //hook_piece_placed();
-
-//pieces_placed([2]);
+//
+pieces_placed([0,3]);
 
 //intersection()
 //{
@@ -79,9 +79,10 @@ dist_to_bottom = 0.11*z_scale; // distance to the interior floor of the object
 //cube([100,100,100]);
 //}
 
-
+//rotate(90,[1,0,0])
+//cover();
 //piece_cut(0);
-pieces_assembled();
+//pieces_assembled();
 //
 
 //piece_A_cut();
@@ -150,12 +151,12 @@ module piece_cut(num_plugs)
   cutting_object();
   }
   
-  if (electonics_parts_toggle)
-  {
-	translate([0,.50*z_scale,0])
-	rotate(90,[1,0,0])
-	  cover();
-  }
+//  if (electonics_parts_toggle)
+//  {
+//	translate([0,.50*z_scale,0])
+//	rotate(90,[1,0,0])
+//	  cover();
+//  }
 }
 
 
@@ -525,24 +526,7 @@ module wedge(l,w,h)
 
 
 
-module slot_cutouts()
-{ // magic constant in the rotate...
-  translate([0,0,-dist_to_floor+snap_thickness+snap_thickness_overage/2+snap_height_offset])
-  rotate(-30,[0,0,1])
-  translate([0,0,-.20*z_scale])
- linear_extrude(height=.2*z_scale)
-  projection()
 
-  cover_snaps(width=snap_width+snap_width_overage, length=snap_length+snap_length_overage, thickness=snap_thickness); // no need to overage the thickness since projecting in that direction
-  
-  
-  translate([0,0,-snap_thickness_overage/2+snap_height_offset])
-	 {
-	  cover_snaps(width=snap_width+snap_width_overage, length=snap_length+snap_length_overage, thickness=snap_thickness+snap_thickness_overage);
-	   rotate(-20,[0,0,1])
-	 cover_snaps(width=snap_width+snap_width_overage, length=snap_length+snap_length_overage, thickness=snap_thickness+snap_thickness_overage);
-	 }
-}
 
 
 
@@ -585,20 +569,7 @@ module a_quarter()
 }
 
 
-module cover_snaps(width, length, thickness)
-{
-  rotate(20,[0,0,1])
-  translate([0,0,-dist_to_floor])
-  
-  	for (a=[0,180])
-	{
-  
-	
-	  rotate(a,[0,0,1])
-	  translate([mount_platform_dia/2-1,-width/2,0])
-	  cube([length,width,thickness]);
-}
-}
+// cover_snaps are defined in the mount file
 
 
 
@@ -613,42 +584,6 @@ module cover_cone(inset = 0)
 	translate([0,0,-dist_to_floor-q])
 	 cylinder(r1=bottom_r,r2=top_r,h=q);
   
-}
-
-
-module mount()
-{
-  difference()
-  {
-  cylinder(r=mount_platform_dia/2,h=mount_t);
-
-  translate([0,0,-eps])
-	cylinder(r=mount_platform_dia_inner/2,h=mount_t+2*eps);
-	
-
-  for (ii=[-1,1])
-  {
-	translate([ii*mount_screwhole_offset,0,-eps])
-	  cylinder(r=mount_screwhole_dia/2,h=mount_t+2*eps);
-	
-	translate([0,ii*(mount_platform_dia/2+mount_platform_dia/2 - mount_squaring_d),mount_t/2])
-	cube([mount_platform_dia,mount_platform_dia,mount_t+2*eps],center=true);
-  }
-  
-  
-  mount_wire_cutting_object();
-
-  
-  }
-
-}
-
-module mount_wire_cutting_object()
-{
-  translate([0,0,mount_t/3 - eps/2])
-  cube([wire_cutout_width,mount_platform_dia*10,mount_wire_cutout_vertical_ratio*mount_t+eps],center=true);  
-  
-  // the above 10 is a large multiplicative factor, because i'm lazy
 }
 
 

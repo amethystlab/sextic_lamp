@@ -2,42 +2,39 @@
 $fn = 40;
 
 sextic_piece_filename = "prepped_for_lamp.stl";
-
-
-pi = acos(-1);
-angle_dihedral = acos(-sqrt(5)/3)*180/pi;
-
+connection_piece_filename = sextic_piece_filename;
+make_hollow = true;
 
 z_scale = 60; // the overall height of the object, top to bottom.
-wall_thickness = 1.5;// only ever approximate, no promises, k?
-wall_thickness_hook_part = 4;// only ever approximate, no promises, k?
+wall_thickness = 3;// only ever approximate, no promises, k?
+wall_thickness_hook_part = 2;// only ever approximate, no promises, k?
 
 
-interior_z_offset = 1; // adjust the interior smaller blob.  can help with bottom thickness problems.
+interior_z_offset = 1.5; // adjust the interior smaller blob.  can help with bottom thickness problems.
 
-connection_cyl_dia = 10;
+connection_cyl_dia = 9;
 connection_wall_thickness = 2;
 connection_length = 5;
 
-connection_overlap = 2; // how much the connection extends into the body.  this is because the points are there...
+connection_overlap = 2.1; // how much the connection extends into the body.  this is because the points are there...
 
-wire_hole_dia = 5;
+wire_hole_dia = 4;
 
-connection_play = 0.225; // a gap between the plug and the socket
+connection_play = 0.45; // a gap between the plug and the socket
 
 
 
 plug_tab_depth = 4; // also how long the tab wedge is.  this distance produces overage on how long the plug cylinder is, how long it extends beyond the socket.  
 plug_tab_cutout_depth = 11; // includes the plug_tab_depth
 plug_tab_cutout_thickness = 0; // the amount of material missing. the gap between the tab and the cylinder remnants
-plug_tab_thickness = 1.2;
+plug_tab_thickness = 1.3;
 
-plug_wedge_h =3; // how much the tab protrudes above the cylinder is the difference between this number and plug_tab_thickness.  this number must exceed plug_tab_thickness for the tab to be visible.
-plug_wedge_w = 3; // how wide the tab is.
+plug_wedge_h =3.1; // how much the tab protrudes above the cylinder is the difference between this number and plug_tab_thickness.  this number must exceed plug_tab_thickness for the tab to be visible.
+plug_wedge_w = 2; // how wide the tab is.
 
 plug_taper = .7;
 
-plug_length_overage = 2.5; // a manual adjustment for making the plug long enough to snap in... this really should be automatically computed..
+plug_length_overage = 2.7; // a manual adjustment for making the plug long enough to snap in... this really should be automatically computed..
 
 
 
@@ -73,7 +70,7 @@ snap_housing_wall_thickness = 3;
 snap_housing_ceiling_thickness = 2;
 snap_height_offset = 1.8; // adjust the vertical placement of the tab
 
-hang_hook_dia = 40;
+hang_hook_dia = 20;
 hang_hook_thickness = 12;
 hang_hook_wall_thickness = 2;
 hang_hook_height = .83*z_scale;
